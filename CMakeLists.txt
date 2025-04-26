@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(TSL_problem main.cpp testing.hpp common.hpp
                 stupid.hpp linear.hpp dynamic.hpp genetic.hpp
-                2opt.hpp lk.hpp)
+                2opt.hpp lkh.hpp research.hpp)
                #numbers.hpp numbers.cpp
                #funcs.hpp funcs.cpp
                #glut_funcs.hpp glut_funcs.cpp)

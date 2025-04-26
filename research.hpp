@@ -1,9 +1,10 @@
 #pragma once
 #include "common.hpp"
+#include "unistd.h"
 
-class Solver_genetic {
+class Solver_research {
 public:
-    Solver_genetic(int n, int population_ = 60, double mutation_rate_ = 0.2)
+    Solver_research(int n, int population_ = 100, double mutation_rate_ = 0.2)
     {
         cities_n = n;
         mutation_rate = mutation_rate_;
@@ -14,7 +15,7 @@ public:
         for (int i = 0; i < n; ++i)
             Perm[i] = i;
     }
-    ~Solver_genetic() = default;
+    ~Solver_research() = default;
 
     void normalize_prob()
     {
@@ -94,8 +95,9 @@ public:
             normalize_prob();
             for (int i = 0; i < Pop.size(); ++i) {
                 index1 = choose_one();
-                index2 = choose_one();
-                Pop_buff[i] = crossover(index1, index2);
+                //index2 = choose_one();
+                //Pop_buff[i] = crossover(index1, index2);
+                Pop_buff[i] = Pop[index1];
                 mutate(i);
             }
             Pop = Pop_buff;

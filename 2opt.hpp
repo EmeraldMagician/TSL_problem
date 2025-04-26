@@ -1,5 +1,6 @@
 #pragma once
 #include "common.hpp"
+#include "unistd.h"
 
 class Solver_2opt {
 public:
@@ -20,9 +21,12 @@ public:
         int i, j;
         bool optimal;
         clock_t start = clock();
+        //std::random_shuffle(Perm.begin(), Perm.end());
+        //std::vector<int> Perm_buff = Perm;
         while (local_dist > best_dist + 1e-10){
             optimal = false;
             std::random_shuffle(Perm.begin(), Perm.end());
+            //Perm = Perm_buff;
             while (!optimal){
                 optimal = true;
                 for (i = 0; i < cities_n; ++i)
@@ -31,18 +35,20 @@ public:
                                 Distances[Perm[(j + cities_n - 1) % cities_n]][Perm[j]] -
                                 Distances[Perm[(i + cities_n - 1) % cities_n]][Perm[(j + cities_n - 1) % cities_n]] -
                                 Distances[Perm[i]][Perm[j]] > 1e-10){
-                            std::reverse(Perm.begin() + i, Perm.begin() + j);
-                            optimal = 0;
-                            i = cities_n;
-                            j = cities_n;
+                            optimal = false;
+                            if (rand() % 2 == 0){
+                                std::reverse(Perm.begin() + i, Perm.begin() + j);
+                                i = cities_n;
+                                j = cities_n;
+                            }
                         }
                     }
             }
             temp_dist = dist(Perm, Distances);
             if (temp_dist < local_dist - 1e-10){
                 local_dist = temp_dist;
-                //print(Perm);
-                //std::cout << temp_dist << "\n";
+            //    print(Perm);
+            //    std::cout << temp_dist << "\n";
             }
             //std::cout << temp_dist << "\n";
         }
